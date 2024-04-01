@@ -10,6 +10,8 @@ SEARCH_ENGINE_ID = keys.SEARCH_ENGINE_ID
 # Problem - snarky redditards
 # Problem - no product names in comment (especially if the poster also asks another question or says something stupid)
 
+# spell check
+
 # Prompt user for item and details
 def prompt_user():
     item = input('What are you looking for? ')
@@ -55,7 +57,7 @@ def find_subreddit(item, details):
         else:
             subreddit_name = first_result_url.split('/')[4]
 
-        print(first_result_url)
+        print(first_result_url) # Tests
         print(subreddit_name)
         return subreddit_name
     else:
