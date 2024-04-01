@@ -7,7 +7,6 @@ SEARCH_ENGINE_ID = keys.SEARCH_ENGINE_ID
 
 # use ai to find item name from comments LOOOL IDK HOW TO DO THIS
 
-
 # Prompt user for item and details
 def prompt_user():
     item = input('What are you looking for? ')
@@ -28,9 +27,13 @@ def get_reddit_responses(item, details):
     responses = []
 
     for submission in subreddit.search(query, sort='relevance', time_filter='month'):
-        if submission.num_comments > 0:
-            top_comment = submission.comments[0].body
-            responses.append(top_comment)
+        if submission.num_comments > 1:
+            if 'I am a bot, and this action was performed automatically.' in submission.comments[0].body:
+                top_comment = submission.comments[1].body
+                responses.append(top_comment)
+            else:    
+                top_comment = submission.comments[0].body
+                responses.append(top_comment)
             
             if len(responses) == 5:
                 break
