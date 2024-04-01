@@ -6,6 +6,9 @@ API_KEY = keys.API_KEY
 SEARCH_ENGINE_ID = keys.SEARCH_ENGINE_ID
 
 # use ai to find item name from comments LOOOL IDK HOW TO DO THIS
+# Problem - unreleated subreddits
+# Problem - snarky redditards
+# Problem - no product names in comment (especially if the poster also asks another question or says something stupid)
 
 # Prompt user for item and details
 def prompt_user():
