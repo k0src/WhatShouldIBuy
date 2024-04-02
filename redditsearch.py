@@ -53,25 +53,30 @@ def get_reddit_responses(item, details):
     subreddit = reddit.subreddit(subreddit_name)
     query = f'{item} {details}'
 
-    responses = []
+    products = []
 
     for submission in subreddit.search(query, sort='best', time_filter='all'):
-        if submission.num_comments < 1:
+        if submission.num_comments <= 1:
             continue
         elif submission.num_comments > 1:
-            if 'I am a bot, and this action was performed automatically.' in submission.comments[0].body:
-                top_comment = submission.comments[1].body
-                responses.append(extract_products(top_comment))
-            elif '[deleted]' in submission.comments[0].body:
-                top_comment = submission.comments[1].body
-                responses.append(extract_products(top_comment))
-            else:    
-                top_comment = submission.comments[0].body
-                responses.append(extract_products(top_comment))
-            if len(responses) == 5:
-                break
+            for comment in submission.comments:
+                if 'I am a bot, and this action was performed automatically.' in comment.body:
+                    continue
+                elif '[deleted]' in comment.body:
+                    continue
+                else:    
+                    product = extract_products(comment.body)
+                    if product.strip() and len(product.strip()) > 3:
+                        products.append(product)
+                    else:
+                        continue
+                    if len(products) == 5:
+                        break
+                    
+        if len(products) == 5:
+            break
 
-    return responses
+    return products
 
 # Use Google Custom Search API to find subreddit based on item and details
 def find_subreddit(item, details):
@@ -101,43 +106,36 @@ def find_store_page(product):
         return None
     
 # Use spaCy to extract products from top comment
-def extract_products(top_comment):
-    products = ''
+def extract_products(comment):
+    product = ''
 
     nlp = spacy.load("en_core_web_trf")
-    doc = nlp(top_comment)
+    doc = nlp(comment)
 
     for entity in doc.ents:
         if entity.label_ == 'PRODUCT':
-            products = entity.text
-            break
+            product = entity.text
 
-    return products
+    return product
 
 # Process responses
-def process_responses(responses):
-    filtered_responses = []
-
-    if responses:
-        for response in responses:
-            if len(response.strip()) > 3:
-                filtered_responses.append(response)
-    else:
-        return 'No recommendations found.'
+def process_responses(products):
 
     formatted_recommendations = []
 
-    if filtered_responses:
-        for index, product in enumerate(filtered_responses):
+    if products:
+        for index, product in enumerate(products):
             formatted_recommendations.append(f'{index + 1}. {product}\nLink: {find_store_page(product)}')
+    else:
+        return 'No recommendations found.'
 
     return formatted_recommendations
 
 # Main function
 def main():
     item, details = prompt_user()
-    responses = get_reddit_responses(item, details)
-    recommendations = process_responses(responses)
+    products = get_reddit_responses(item, details)
+    recommendations = process_responses(products)
 
     if recommendations:
         print("According to the internet, you should buy:")
