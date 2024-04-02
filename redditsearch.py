@@ -71,7 +71,7 @@ def get_reddit_responses(item, details):
         if len(products) == 5:
             break
 
-    return products
+    return products, item
 
 # Use Google Custom Search API to find subreddit based on item and details
 def find_subreddit(item, details):
@@ -90,16 +90,26 @@ def find_subreddit(item, details):
         return None
     
 # Use Google Custom Search API to find store page based on product
-def find_store_page(product):
+def find_store_page(product, item):
     service = build("customsearch", "v1", developerKey=API_KEY)
-    res = service.cse().list(q=f"{product} buy", cx=SEARCH_ENGINE_ID).execute()
+    res = service.cse().list(q=f"{product} {item} buy", cx=SEARCH_ENGINE_ID).execute()
 
     if 'items' in res:
         first_result_url = res['items'][0]['link']
         return first_result_url
     else:
         return None
-    
+
+# Use Google Custom Search API to find image of product
+def find_product_image(product, item):
+    service = build("customsearch", "v1", developerKey=API_KEY)
+    res = service.cse().list(q=f'{product} {item}', cx=SEARCH_ENGINE_ID, searchType='image').execute()
+    if 'items' in res:
+        first_image_link = res['items'][0]['link']
+        return first_image_link
+    else:
+        return None
+
 # Use spaCy to extract products from top comment
 def extract_products(comment):
     product = ''
@@ -114,13 +124,13 @@ def extract_products(comment):
     return product
 
 # Process responses
-def process_responses(products):
+def process_responses(products, item):
 
     formatted_recommendations = []
 
     if products:
         for index, product in enumerate(products):
-            formatted_recommendations.append(f'{index + 1}. {product}\nLink: {find_store_page(product)}')
+            formatted_recommendations.append(f'{index + 1}. {product}\nLink: {find_store_page(product, item)}\nIMAGE: {find_product_image(product, item)}')
     else:
         return None
 
@@ -129,8 +139,8 @@ def process_responses(products):
 # Main function
 def main():
     item, details = prompt_user()
-    products = get_reddit_responses(item, details)
-    recommendations = process_responses(products)
+    products, item = get_reddit_responses(item, details)
+    recommendations = process_responses(products, item)
 
     if recommendations:
         print("According to the internet, you should buy:")
