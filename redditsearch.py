@@ -13,9 +13,8 @@ SEARCH_ENGINE_ID = keys.SEARCH_ENGINE_ID
 # ['Zephyrus G14', '', 'The', '', 'Vivobook 14'] Lol
 # i either have to find a way to make it better or just return the comment idek
 # can just google the product and use thta to get link
-
-# todo - fix thing or just do comment
-# buy link
+# todo - fix thing or just do comment - if product is found in comment - add link
+# ... for yap
 # django html css - 
 # image of product
 
@@ -130,7 +129,7 @@ def process_responses(responses):
 
     if filtered_responses:
         for index, product in enumerate(filtered_responses):
-            formatted_recommendations.append(f'{index + 1}. {product} Link: {find_store_page(product)}')
+            formatted_recommendations.append(f'{index + 1}. {product}\nLink: {find_store_page(product)}')
 
     return formatted_recommendations
 
