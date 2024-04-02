@@ -120,6 +120,7 @@ def extract_products(comment):
     for entity in doc.ents:
         if entity.label_ == 'PRODUCT':
             product = entity.text
+            break
 
     return product
 
