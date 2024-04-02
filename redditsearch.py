@@ -3,18 +3,11 @@ from googleapiclient.discovery import build
 import keys
 import spacy
 from spellchecker import SpellChecker
+import re
 
 API_KEY = keys.API_KEY
 SEARCH_ENGINE_ID = keys.SEARCH_ENGINE_ID
 
-# Using spaCy's Entity Recognition to identify products
-# butttt - it kinda sucks ass
-# throws out a lot of products
-# ['Zephyrus G14', '', 'The', '', 'Vivobook 14'] Lol
-# i either have to find a way to make it better or just return the comment idek
-# can just google the product and use thta to get link
-# todo - fix thing or just do comment - if product is found in comment - add link
-# ... for yap
 # django html css - 
 # image of product
 
@@ -67,12 +60,14 @@ def get_reddit_responses(item, details):
                 else:    
                     product = extract_products(comment.body)
                     if product.strip() and len(product.strip()) > 3:
-                        products.append(product)
+                        index = product.find(']') 
+                        product = product[:index]
+                        products.append(product.strip())
                     else:
                         continue
                     if len(products) == 5:
                         break
-                    
+
         if len(products) == 5:
             break
 
@@ -127,7 +122,7 @@ def process_responses(products):
         for index, product in enumerate(products):
             formatted_recommendations.append(f'{index + 1}. {product}\nLink: {find_store_page(product)}')
     else:
-        return 'No recommendations found.'
+        return None
 
     return formatted_recommendations
 
