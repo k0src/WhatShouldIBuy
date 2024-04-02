@@ -1,0 +1,58 @@
+h1 {
+    font-family: "Inter", sans-serif;
+    color: white;
+    font-size: 48pt;
+    text-align: center;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(117, 0, 163, 0.5);
+    font-size: 12pt;
+    text-align: center;
+    background: linear-gradient(-155deg, #202020 0%, #000000 100%);
+    background-color: #000000;
+    background-size: 500% 500%;
+}
+
+.search {
+    width: 100%;
+    position: relative;
+    display: flex;
+  }
+  
+  .searchTerm {
+    width: 100%;
+    border: 3px solid #ff7300;
+    border-right: none;
+    padding: 5px;
+    height: 20px;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    color: #ff6f0e;
+  }
+  
+  .searchTerm:focus{
+    color: #ff7300;
+  }
+  
+  .searchButton {
+    width: 40px;
+    height: 36px;
+    border: 1px solid #ff7300;
+    background: #ff7300;
+    text-align: center;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 20px;
+  }
+
+  .wrap{
+    width: 40%;
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
