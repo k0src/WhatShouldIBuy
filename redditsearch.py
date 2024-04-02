@@ -56,17 +56,19 @@ def get_reddit_responses(item, details):
 
     responses = []
 
-    for submission in subreddit.search(query, sort='relevance', time_filter='month'):
-        if submission.num_comments > 1:
+    for submission in subreddit.search(query, sort='best', time_filter='all'):
+        if submission.num_comments < 1:
+            continue
+        elif submission.num_comments > 1:
             if 'I am a bot, and this action was performed automatically.' in submission.comments[0].body:
                 top_comment = submission.comments[1].body
-
+                responses.append(extract_products(top_comment))
+            elif '[deleted]' in submission.comments[0].body:
+                top_comment = submission.comments[1].body
                 responses.append(extract_products(top_comment))
             else:    
                 top_comment = submission.comments[0].body
-
                 responses.append(extract_products(top_comment))
-            
             if len(responses) == 5:
                 break
 
@@ -83,8 +85,19 @@ def find_subreddit(item, details):
             return None
         else:
             subreddit_name = first_result_url.split('/')[4]
-
+        
         return subreddit_name
+    else:
+        return None
+    
+# Use Google Custom Search API to find store page based on product
+def find_store_page(product):
+    service = build("customsearch", "v1", developerKey=API_KEY)
+    res = service.cse().list(q=f"{product} buy", cx=SEARCH_ENGINE_ID).execute()
+
+    if 'items' in res:
+        first_result_url = res['items'][0]['link']
+        return first_result_url
     else:
         return None
     
@@ -101,26 +114,36 @@ def extract_products(top_comment):
             break
 
     return products
-# main
-def main():
-    item, details = prompt_user()
-    responses = get_reddit_responses(item, details)
 
-    print(responses) # Test
-
+# Process responses
+def process_responses(responses):
     filtered_responses = []
 
     if responses:
         for response in responses:
-            if len(response.strip()) >= 3:
+            if len(response.strip()) > 3:
                 filtered_responses.append(response)
     else:
-        print('No recommendations found.')
+        return 'No recommendations found.'
+
+    formatted_recommendations = []
 
     if filtered_responses:
+        for index, product in enumerate(filtered_responses):
+            formatted_recommendations.append(f'{index + 1}. {product} Link: {find_store_page(product)}')
+
+    return formatted_recommendations
+
+# Main function
+def main():
+    item, details = prompt_user()
+    responses = get_reddit_responses(item, details)
+    recommendations = process_responses(responses)
+
+    if recommendations:
         print("According to the internet, you should buy:")
-        for index, response in enumerate(filtered_responses):
-            print(f'{index + 1}. {response}')
+        for recommendation in recommendations:
+            print(recommendation)
     else:
         print('No recommendations found.')
 
