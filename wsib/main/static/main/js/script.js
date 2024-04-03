@@ -1,6 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
+    var loadingDiv = document.getElementById('loading');
+    loadingDiv.style.display = 'none';
+
+    var accordingDiv = document.getElementById('according');
+    accordingDiv.style.display = 'none';
+
     document.getElementById('searchForm').addEventListener('submit', function(event) {
         event.preventDefault();
+        loadingDiv.style.display = 'block';
+
         var inputValue = document.getElementById('searchInput').value;
         fetch('/process_input/', {
             method: 'POST',
@@ -14,7 +22,22 @@ document.addEventListener('DOMContentLoaded', function() {
             return response.json();
         })
         .then(data => {
-            document.getElementById('result').innerText = data.processed_text;
+            loadingDiv.style.display = 'none';
+            accordingDiv.style.display = 'block';
+
+            console.log('Data received:', data);
+            
+            var resultDiv = document.getElementById('result');
+
+            resultDiv.innerHTML = '';
+
+            data.recommendations.forEach(function(recommendation) {
+                var recommendationDiv = document.createElement('div');
+                recommendationDiv.innerText = recommendation;
+                resultDiv.appendChild(recommendationDiv);
+
+                console.log('New div created:', recommendation); // object Object make into name link and image
+            });
         })
         .catch(error => console.error('Error:', error));
     });

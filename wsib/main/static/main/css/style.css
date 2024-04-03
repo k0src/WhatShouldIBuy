@@ -21,7 +21,22 @@ body {
     font-family: "Inter", sans-serif;
     color: white;
     font-size: 16px;
-    margin-top: 50px;
+    text-align: center;
+}
+
+#according {
+    font-family: "Inter", sans-serif;
+    color: white;
+    font-size: 24px;
+    text-shadow: 2px 2px 4px #ff7300;
+    text-align: center;
+}
+
+#loading {
+    font-family: "Inter", sans-serif;
+    color: white;
+    font-size: 16px;
+    text-align: center;
 }
 
 .search {
