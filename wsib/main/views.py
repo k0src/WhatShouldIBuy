@@ -10,7 +10,8 @@ def process_input(request):
         data = json.loads(request.body.decode('utf-8'))
         input_text = data.get('input_text', '')
 
-        processed_text = input_text + 'YES'
+        processed_text = input_text + ' - processed'
+        # call stuff here
 
         return JsonResponse({'processed_text': processed_text})
     else:
