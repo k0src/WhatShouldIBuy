@@ -7,9 +7,6 @@ from spellchecker import SpellChecker
 API_KEY = keys.API_KEY
 SEARCH_ENGINE_ID = keys.SEARCH_ENGINE_ID
 
-# django html css - 
-# image of product
-
 # Prompt user for item and details
 def prompt_user():
     item = input('What are you looking for? ')
