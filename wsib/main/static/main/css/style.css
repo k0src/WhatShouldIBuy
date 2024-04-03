@@ -1,6 +1,7 @@
 h1 {
     font-family: "Inter", sans-serif;
     color: white;
+    text-shadow: 2px 2px 4px #ff7300;
     font-size: 48pt;
     text-align: center;
 }
@@ -8,12 +9,12 @@ h1 {
 body {
     font-family: "Inter", sans-serif;
     color: white;
-    text-shadow: 2px 2px 4px rgba(117, 0, 163, 0.5);
     font-size: 12pt;
     text-align: center;
-    background: linear-gradient(-155deg, #202020 0%, #000000 100%);
-    background-color: #000000;
-    background-size: 500% 500%;
+    background-color: black;
+    /* background-image: url('../images/bg.jpg');
+    background-size: cover; 
+    background-repeat: no-repeat; */
 }
 
 #result {
@@ -27,9 +28,9 @@ body {
     width: 100%;
     position: relative;
     display: flex;
-  }
+}
   
-  .searchTerm {
+.searchTerm {
     width: 100%;
     border: 3px solid #ff7300;
     border-right: none;
@@ -38,13 +39,13 @@ body {
     border-radius: 5px 0 0 5px;
     outline: none;
     color: #ff6f0e;
-  }
+}
   
-  .searchTerm:focus{
+.searchTerm:focus {
     color: #ff7300;
-  }
+}
   
-  .searchButton {
+.searchButton {
     width: 40px;
     height: 36px;
     border: 1px solid #ff7300;
@@ -54,12 +55,24 @@ body {
     border-radius: 0 5px 5px 0;
     cursor: pointer;
     font-size: 20px;
-  }
+}
 
-  .wrap{
+.wrap {
     width: 40%;
-    position: absolute;
-    top: 25%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
+    margin: 0 auto;
+    text-align: center; 
+}
+
+footer {
+    position: fixed;
+    bottom: 0; 
+    width: 100%;
+    color: rgb(110, 110, 110);
+    padding: 10px;
+    text-align: center;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}

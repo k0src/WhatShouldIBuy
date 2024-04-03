@@ -3,7 +3,6 @@ from googleapiclient.discovery import build
 import keys
 import spacy
 from spellchecker import SpellChecker
-import re
 
 API_KEY = keys.API_KEY
 SEARCH_ENGINE_ID = keys.SEARCH_ENGINE_ID

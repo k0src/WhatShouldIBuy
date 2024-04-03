@@ -9,7 +9,9 @@ def process_input(request):
     if request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
         input_text = data.get('input_text', '')
-        processed_text = input_text.upper()  # Process the input text (in this case, converting to uppercase)
+
+        processed_text = input_text + 'YES'
+
         return JsonResponse({'processed_text': processed_text})
     else:
         return JsonResponse({'error': 'Invalid request'})

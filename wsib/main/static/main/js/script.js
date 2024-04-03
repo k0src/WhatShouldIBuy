@@ -2,8 +2,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('searchForm').addEventListener('submit', function(event) {
         event.preventDefault();
         var inputValue = document.getElementById('searchInput').value;
-        console.log("Input value:", inputValue);  // debug
-
         fetch('/process_input/', {
             method: 'POST',
             headers: {
@@ -13,11 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
             body: JSON.stringify({'input_text': inputValue})
         })
         .then(response => {
-            console.log('Response received:', response); //debuf
             return response.json();
         })
         .then(data => {
-            console.log('Data received:', data); // degub
             document.getElementById('result').innerText = data.processed_text;
         })
         .catch(error => console.error('Error:', error));
