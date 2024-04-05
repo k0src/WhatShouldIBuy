@@ -38,8 +38,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 recommendationDiv.classList.add('recommendations');
 
                 recommendationDiv.innerHTML = `
-                    <h2><a href="${recommendation.link}" target="_blank">${recommendation.name}</a></h2>
-                    <p><img src="${recommendation.image}" alt="Product Image"></p>
+                    <h2>${recommendation.name}</h2>
+                    <p><a href="${recommendation.link}" target="_blank"><img src="${recommendation.image}" alt="Product Image"></a></p>
                 `;
 
                 resultDiv.appendChild(recommendationDiv);

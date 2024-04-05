@@ -34,6 +34,12 @@ body {
     color: white;
     font-size: 16px;
     text-align: center;
+    animation: loading 1.5s infinite;
+}
+@keyframes loading {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
 }
 
 .search {
@@ -90,17 +96,23 @@ footer a {
 }
 
 .recommendations {
-    padding: 10px;
-    margin-bottom: 20px;
+    padding: 5px;
 }
 
 .recommendations img {
-    max-width: 200px; 
-    max-height: 200px; 
+    max-width: 400px; 
+    max-height: 400px; 
     object-fit: cover; 
     border: 3px solid transparent;
     border-radius: 5px;
     transition: border-color 0.3s ease;
+}
+
+.recommendations h2 {
+    font-family: "Inter", sans-serif;
+    color: #ff7300;
+    font-size: 20pt;
+    text-align: center;
 }
 
 .recommendations img:hover {
