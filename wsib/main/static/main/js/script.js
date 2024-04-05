@@ -32,11 +32,19 @@ document.addEventListener('DOMContentLoaded', function() {
             resultDiv.innerHTML = '';
 
             data.recommendations.forEach(function(recommendation) {
+
                 var recommendationDiv = document.createElement('div');
-                recommendationDiv.innerText = recommendation;
+
+                recommendationDiv.classList.add('recommendations');
+
+                recommendationDiv.innerHTML = `
+                    <h2><a href="${recommendation.link}" target="_blank">${recommendation.name}</a></h2>
+                    <p><img src="${recommendation.image}" alt="Product Image"></p>
+                `;
+
                 resultDiv.appendChild(recommendationDiv);
 
-                console.log('New div created:', recommendation); // object Object make into name link and image
+                console.log('New div created:', recommendation);
             });
         })
         .catch(error => console.error('Error:', error));

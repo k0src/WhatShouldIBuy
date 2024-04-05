@@ -7,13 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>What Should I Buy?</title>
     <link rel="shortcut icon" type="image/png" href="{% static 'main/images/favicon.png' %}"/>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'main/css/style.css' %}">
-    
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/style.css' %}"> 
 </head>
 <body>
     <div class="main">
@@ -32,12 +30,11 @@
         <div id="according">
             <p>According to the internet, you should buy...</p>
         </div>
-        <div id="loading">
+        <div class="loader" id="loading">
             <p>Loading...</p>
         </div>
         <div id="result"></div>
     </div>
-
 
     <script src="{% static 'main/js/script.js' %}"></script>
     <footer>
