@@ -13,14 +13,13 @@ def get_reddit_responses(input_text):
 
     reddit = praw.Reddit(client_id=keys.client_id, 
                          client_secret=keys.client_secret, 
-                         user_agent='green fn')
+                         user_agent='reddit_search')
     
     subreddit = reddit.subreddit(subreddit_name)
     query = input_text
 
     products = []
-
-    # RETURN REDDIT COMMENT LINK AS WELL PUT UNDER IMAGE
+    source_links = []
 
     for submission in subreddit.search(query, sort='best', time_filter='all'):
         if submission.num_comments <= 1:
@@ -37,6 +36,7 @@ def get_reddit_responses(input_text):
                         index = product.find(']') 
                         product = product[:index]
                         products.append(product.strip())
+                        source_links.append(f'https://www.reddit.com/{comment.permalink}')
                     else:
                         continue
                     if len(products) == 5:
@@ -45,7 +45,7 @@ def get_reddit_responses(input_text):
         if len(products) == 5:
             break
 
-    return products
+    return products, source_links
 
 # Use Google Custom Search API to find subreddit based on item and details
 def find_subreddit(input_text):
@@ -99,16 +99,20 @@ def extract_products(comment):
     return product
 
 # Process responses
-def process_responses(products, input_text):
-
+def process_responses(products, input_text, source_links):
     recommendations = []
 
     if products:
-        for product in products:
+        for product, source_link in zip(products, source_links):
             link = find_store_page(product, input_text)
             image = find_product_image(product, input_text)
             
-            product_dict = {'name': product, 'link': link, 'image': image}
+            product_dict = {
+                'name': product,
+                'link': link,
+                'image': image,
+                'source_link': source_link
+            }
             
             recommendations.append(product_dict)
     else:
@@ -126,12 +130,11 @@ def main(input_text):
         correction = spell.correction(word)
         input_text = input_text.replace(word, correction)
 
-    products = get_reddit_responses(input_text)
-    recommendations = process_responses(products, input_text)
+    products, source_links = get_reddit_responses(input_text)
+    recommendations = process_responses(products, input_text, source_links)
 
     if recommendations:
         return recommendations
-
     else:
         return ['No recommendations found.']
 

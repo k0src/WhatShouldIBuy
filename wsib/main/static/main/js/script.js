@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 recommendationDiv.innerHTML = `
                     <h2>${recommendation.name}</h2>
                     <p><a href="${recommendation.link}" target="_blank"><img src="${recommendation.image}" alt="Product Image"></a></p>
+                    <p><a href="${recommendation.source_link}" target="_blank">Source Link</a></p>
                 `;
 
                 resultDiv.appendChild(recommendationDiv);

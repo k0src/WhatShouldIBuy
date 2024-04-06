@@ -36,14 +36,6 @@ body {
     text-align: center;
 }
 
-/* #according {
-    font-family: "Inter", sans-serif;
-    color: white;
-    font-size: 24px;
-    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.2));
-    text-align: center;
-} */
-
 #loading {
     font-family: "Inter", sans-serif;
     color: white;
@@ -129,8 +121,8 @@ footer a {
 }
 
 .recommendations img {
-    max-width: 400px; 
-    max-height: 400px; 
+    max-width: 500px; 
+    max-height: 500px; 
     object-fit: cover; 
     border: 3px solid transparent;
     border-radius: 5px;
