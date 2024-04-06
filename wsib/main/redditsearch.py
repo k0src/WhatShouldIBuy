@@ -20,6 +20,8 @@ def get_reddit_responses(input_text):
 
     products = []
 
+    # RETURN REDDIT COMMENT LINK AS WELL PUT UNDER IMAGE
+
     for submission in subreddit.search(query, sort='best', time_filter='all'):
         if submission.num_comments <= 1:
             continue

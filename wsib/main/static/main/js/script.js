@@ -2,11 +2,20 @@ document.addEventListener('DOMContentLoaded', function() {
     var loadingDiv = document.getElementById('loading');
     loadingDiv.style.display = 'none';
 
-    var accordingDiv = document.getElementById('according');
-    accordingDiv.style.display = 'none';
-
     document.getElementById('searchForm').addEventListener('submit', function(event) {
         event.preventDefault();
+
+        var inputValue = document.getElementById('searchInput').value.trim(); 
+
+        if (!inputValue) {
+            var searchDiv = document.querySelector('.search');
+            searchDiv.classList.add('shake');
+            setTimeout(function() {
+                searchDiv.classList.remove('shake');
+            }, 500);
+            return; 
+        }
+
         loadingDiv.style.display = 'block';
 
         var inputValue = document.getElementById('searchInput').value;
@@ -23,9 +32,6 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(data => {
             loadingDiv.style.display = 'none';
-            accordingDiv.style.display = 'block';
-
-            console.log('Data received:', data);
             
             var resultDiv = document.getElementById('result');
 
@@ -33,9 +39,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
             data.recommendations.forEach(function(recommendation) {
 
-                var recommendationDiv = document.createElement('div');
-
+                var recommendationDiv = document.createElement('div'); 
                 recommendationDiv.classList.add('recommendations');
+                
+                recommendationDiv.style.padding = '10px';
+                recommendationDiv.style.marginBottom = '20px';
 
                 recommendationDiv.innerHTML = `
                     <h2>${recommendation.name}</h2>
@@ -44,7 +52,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 resultDiv.appendChild(recommendationDiv);
 
-                console.log('New div created:', recommendation);
             });
         })
         .catch(error => console.error('Error:', error));
